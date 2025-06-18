@@ -183,7 +183,22 @@ open class Keystone: KeystoneProtocol {
             try{
                 \(functionName)(JSON.parse(decodeURIComponent("\(encodedData)")));
             } catch(e){
-                \(functionName)(decodeURIComponent("\(encodedData)"));
+                if(e instanceof URIError){
+                    try{
+                        \(functionName)(JSON.parse("\(encodedData)"));
+                    }catch(e){
+                        if(e instanceof SyntaxError){
+                            \(functionName)("\(encodedData)");
+                        }else{
+                            \(functionName)("\(e.message)");
+                        }
+                    }
+                }else if(e instanceof SyntaxError){
+                    \(functionName)(decodeURIComponent("\(encodedData)"));
+                }else {
+                    \(functionName)("\(e.message)");
+                }
+                
             }
             try {
                 \(deletingScript);
