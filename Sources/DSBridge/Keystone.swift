@@ -190,13 +190,13 @@ open class Keystone: KeystoneProtocol {
                         if(e instanceof SyntaxError){
                             \(functionName)("\(encodedData)");
                         }else{
-                            \(functionName)("\(e.message)");
+                            \(functionName)(e.message);
                         }
                     }
                 }else if(e instanceof SyntaxError){
                     \(functionName)(decodeURIComponent("\(encodedData)"));
                 }else {
-                    \(functionName)("\(e.message)");
+                    \(functionName)(e.message);
                 }
                 
             }
